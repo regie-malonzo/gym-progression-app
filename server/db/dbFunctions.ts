@@ -13,7 +13,7 @@ export async function addNewExercise(newExercise: Exercise) {
   await connection('exercises').insert(newExercise)
 }
 
-export async function updateExercise(
+export async function updateExerciseById(
   id: number,
   updatedExercise: { exercise_name: string },
 ): Promise<Exercise[]> {
@@ -22,4 +22,8 @@ export async function updateExercise(
     .update(updatedExercise)
 
   return exerciseToUpdate as Exercise[]
+}
+
+export async function deleteExerciseById(id: number) {
+  return await connection('exercises').where({ id }).del()
 }
