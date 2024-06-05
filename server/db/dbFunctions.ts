@@ -8,3 +8,18 @@ export async function getAllExercises(): Promise<Exercise[]> {
 export async function getExerciseById(id: number) {
   return await connection('exercises').where({ id }).first()
 }
+
+export async function addNewExercise(newExercise: Exercise) {
+  await connection('exercises').insert(newExercise)
+}
+
+export async function updateExercise(
+  id: number,
+  updatedExercise: { exercise_name: string },
+): Promise<Exercise[]> {
+  const exerciseToUpdate: unknown = await connection('exercises')
+    .where({ id })
+    .update(updatedExercise)
+
+  return exerciseToUpdate as Exercise[]
+}
