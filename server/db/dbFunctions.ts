@@ -2,7 +2,7 @@ import connection from './connection.ts'
 import { Exercise, Record } from '../../models/exercises.ts'
 
 export async function getAllExercises(): Promise<Exercise[]> {
-  return await connection('exercises').select('exercise_name')
+  return await connection('exercises').select('id', 'exercise_name')
 }
 
 export async function getExerciseById(id: number) {
