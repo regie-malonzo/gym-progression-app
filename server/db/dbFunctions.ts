@@ -40,6 +40,6 @@ export async function getRecordsByExerciseId(
   return await connection('records')
     .join('exercises', 'exercises.id', 'records.exercise_id')
     .where('exercise_id', exercise_id)
-    .select('goal', 'date_of_exercise as Date', 'new_record', 'note')
+    .select('exercise_name', 'goal', 'date_of_exercise', 'new_record', 'note')
     .first()
 }
