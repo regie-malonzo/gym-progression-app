@@ -4,8 +4,8 @@
  */
 export function up(knex) {
   return knex.schema.createTable('records', (table) => {
-    table.increments('id')
-    table.integer('exercise_id')
+    table.increments('id').primary
+    table.integer('exercise_id').references('exercises.id')
     table.string('date_of_exercise')
     table.integer('goal')
     table.integer('new_record')

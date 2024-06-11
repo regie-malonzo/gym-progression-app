@@ -28,7 +28,7 @@ export async function deleteExerciseById(id: number) {
   return await connection('exercises').where({ id }).del()
 }
 
-//RecordsData functions for routes
+//Records functions for routes
 
 export async function getAllRecords(): Promise<Record[]> {
   return await connection('records').select('')
@@ -42,4 +42,18 @@ export async function getRecordsByExerciseId(
     .where('exercise_id', exercise_id)
     .select('exercise_name', 'goal', 'date_of_exercise', 'new_record', 'note')
     .first()
+}
+
+export async function addNewRecordsByExerciseId(
+  newRecord: Record,
+): Promise<number> {
+  const { goal, new_record, date_of_exercise, note, exercise_id } = newRecord
+  const exerciseId = Number(exercise_id)
+  if (isNaN(exerciseId)) {
+    throw new Error('invaild exercise_id')
+  }
+  const [newRecordId] = await connection('records')
+    .insert({ goal, new_record, date_of_exercise, note, exercise_id })
+    .returning('id')
+  return newRecordId
 }

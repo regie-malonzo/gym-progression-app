@@ -24,4 +24,23 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+router.post('/', async (req, res) => {
+  try {
+    const { goal, date_of_exercise, new_record, note, exercise_id } = req.body
+    const id = await db.addNewRecordsByExerciseId({
+      goal,
+      date_of_exercise,
+      note,
+      exercise_id,
+      new_record,
+    })
+    console.log('api', id)
+    const url = `/api/v1/records/${id}`
+    res.status(201).json({ Record: url })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+
 export default router
