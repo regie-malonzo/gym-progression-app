@@ -1,5 +1,5 @@
 import connection from './connection.ts'
-import { Exercise } from '../../models/exercises.ts'
+import { Exercise, Record } from '../../models/exercises.ts'
 
 export async function getAllExercises(): Promise<Exercise[]> {
   return await connection('exercises').select('exercise_name')
@@ -26,4 +26,20 @@ export async function updateExerciseById(
 
 export async function deleteExerciseById(id: number) {
   return await connection('exercises').where({ id }).del()
+}
+
+//RecordsData functions for routes
+
+export async function getAllRecords(): Promise<Record[]> {
+  return await connection('records').select('')
+}
+
+export async function getRecordsByExerciseId(
+  exercise_id: number,
+): Promise<Record[]> {
+  return await connection('records')
+    .join('exercises', 'exercises.id', 'records.exercise_id')
+    .where('exercise_id', exercise_id)
+    .select('goal', 'date_of_exercise as Date', 'new_record', 'note')
+    .first()
 }

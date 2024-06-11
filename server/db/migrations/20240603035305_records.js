@@ -7,7 +7,7 @@ export function up(knex) {
     table.increments('id')
     table.integer('exercise_id')
     table.string('date_of_exercise')
-    table.integer('initial_record')
+    table.integer('goal')
     table.integer('new_record')
     table.string('note')
   })
