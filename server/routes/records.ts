@@ -42,5 +42,25 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Something went wrong' })
   }
 })
+router.patch('/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const { goal, new_record, date_of_exercise, note } = req.body
+    const updateRecord = await db.updateRecordeByExerciseId(id, {
+      goal,
+      new_record,
+      date_of_exercise,
+      note,
+    })
+    if (updateRecord) {
+      console.log('updated content')
+      res.sendStatus(201)
+    }
+    // console.log(updateRecord)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
 
 export default router

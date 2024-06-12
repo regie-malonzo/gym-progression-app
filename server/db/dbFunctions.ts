@@ -1,5 +1,5 @@
 import connection from './connection.ts'
-import { Exercise, Record } from '../../models/exercises.ts'
+import { Exercise, Record, RecordData } from '../../models/exercises.ts'
 
 export async function getAllExercises(): Promise<Exercise[]> {
   return await connection('exercises').select('id', 'exercise_name')
@@ -18,7 +18,7 @@ export async function updateExerciseById(
   updatedExercise: { exercise_name: string },
 ): Promise<Exercise[]> {
   const exerciseToUpdate: unknown = await connection('exercises')
-    .where({ id })
+    .j.where({ id })
     .update(updatedExercise)
 
   return exerciseToUpdate as Exercise[]
@@ -45,7 +45,7 @@ export async function getRecordsByExerciseId(
 }
 
 export async function addNewRecordsByExerciseId(
-  newRecord: Record,
+  newRecord: RecordData,
 ): Promise<number> {
   const { goal, new_record, date_of_exercise, note, exercise_id } = newRecord
   const exerciseId = Number(exercise_id)
@@ -56,4 +56,20 @@ export async function addNewRecordsByExerciseId(
     .insert({ goal, new_record, date_of_exercise, note, exercise_id })
     .returning('id')
   return newRecordId
+}
+
+export async function updateRecordeByExerciseId(
+  exercise_id: number,
+  updatedRecord: {
+    goal: number
+    new_record: number
+    date_of_exercise: string
+    note: string
+  },
+): Promise<RecordData[]> {
+  const recordToUpdate: unknown = await connection('records')
+    .where({ exercise_id })
+    .update(updatedRecord)
+
+  return recordToUpdate as RecordData[]
 }
