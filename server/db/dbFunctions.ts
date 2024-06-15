@@ -73,3 +73,6 @@ export async function updateRecordeByExerciseId(
 
   return recordToUpdate as RecordData[]
 }
+export async function deleteRecordById(exercise_id: number) {
+  return await connection('records').where({ exercise_id }).del()
+}

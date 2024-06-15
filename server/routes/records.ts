@@ -62,5 +62,15 @@ router.patch('/:id', async (req, res) => {
     res.status(500).json({ message: 'Something went wrong' })
   }
 })
+router.delete('/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    await db.deleteRecordById(id)
+    res.sendStatus(200)
+  } catch (error) {
+    console.error(`database error: ${error}`)
+    res.sendStatus(500)
+  }
+})
 
 export default router
