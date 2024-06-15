@@ -18,7 +18,7 @@ export async function updateExerciseById(
   updatedExercise: { exercise_name: string },
 ): Promise<Exercise[]> {
   const exerciseToUpdate: unknown = await connection('exercises')
-    .j.where({ id })
+    .where({ id })
     .update(updatedExercise)
 
   return exerciseToUpdate as Exercise[]
