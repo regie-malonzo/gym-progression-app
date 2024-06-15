@@ -34,9 +34,8 @@ router.post('/', async (req, res) => {
       exercise_id,
       new_record,
     })
-    console.log('api', id)
-    const url = `/api/v1/records/${id}`
-    res.status(201).json({ Record: url })
+
+    res.status(201).json(id)
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })
