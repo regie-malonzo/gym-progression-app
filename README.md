@@ -27,6 +27,7 @@ git clone https://github.com/dev-academy-challenges/boilerplate-fullstack [your-
 cd [your-project-name]
 npm install # to install dependencies
 npm run dev # to start the dev server
+npm run dbconfig # to migrate latest table and run seed
 ```
 
 You can find the server running on [http://localhost:3000](http://localhost:3000) and the client running on [http://localhost:5173](http://localhost:5173).
