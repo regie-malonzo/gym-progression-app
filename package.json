@@ -12,6 +12,7 @@
     "start": "node dist/server.js",
     "dev": "run-p dev:client dev:server",
     "dev:client": "vite",
+    "dbconfig": "npm run knex migrate:latest && npm run knex seed:run",
     "dev:server": "tsx watch server/index.ts",
     "build": "run-s build:client build:server",
     "build:client": "vite build",
