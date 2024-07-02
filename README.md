@@ -1,18 +1,20 @@
-# Boilerplate: Fullstack with Sass
+## Personal Project
+This repo is a personal project that im working on to practice what i've learnt in Dev academy
+It a web app that tracks your personal best from your workout.
+
+
+## Boilerplate: Fullstack with Sass
+
 
 ## Setup
 
 ### What's included
 
 This repo includes:
-
-* a single, simple API endpoint (`/api/v1/fruits`)
-* a single React component (`<App />`)
-* an example database module (`server/db/fruits.js`)
-* an API client module (`client/apis/fruits.js`)
 * configuration for Vitest and testing library
 * configuration for server-side debugging in VS Code
 * configuration for preprocessing Sass
+
 
 ### Installation
 
