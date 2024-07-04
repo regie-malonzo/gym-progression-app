@@ -2,7 +2,7 @@
 This repo is a personal project that im working on to practice what i've learnt in Dev academy
 It a web app that tracks your personal best from your workout.
 
-###TechStack
+### TechStack
 * React
 * ChartJs
 * Express
