@@ -2,6 +2,16 @@
 This repo is a personal project that im working on to practice what i've learnt in Dev academy
 It a web app that tracks your personal best from your workout.
 
+### TechStack
+* React
+* ChartJs
+* Express
+* knex
+* sqlite3
+* Typescript
+  
+
+
 
 ## Boilerplate: Fullstack with Sass
 
