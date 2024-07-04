@@ -93,4 +93,13 @@ export function ExerciseDetail({ exercises }: ExerciseListProps) {
       },
     ],
   }
+  const chartDataDoughnut = {
+    labels: ['Goal', 'Achieved'],
+    datasets: [
+      {
+        label: 'Goal',
+        data: [exercise.goal, exerciseRecords.reduce],
+      },
+    ],
+  }
 }
