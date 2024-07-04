@@ -8,7 +8,6 @@ It a web app that tracks your personal best from your workout.
 * Express
 * knex
 * sqlite3
-* SuperTest
 * Typescript
   
 
