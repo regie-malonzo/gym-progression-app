@@ -6,6 +6,7 @@ import {
   RecordData,
 } from '../../models/exercises'
 import { getExercises, addExercise, deleteExercise } from '../apis/Exercises'
+import RecordChart from './Charts'
 import {
   getRecordsByExerciseId,
   addRecord,
@@ -94,7 +95,7 @@ export default function Exercises() {
         const recordToAdd = { ...newRecord, exercise_id: selectedExerciseId }
         console.log(`Adding record:`, recordToAdd)
         await addRecord(recordToAdd)
-        fetchRecords(selectedExerciseId)
+        fetchRecords(selectedExerciseId) // Refetch records after adding a new record
         setNewRecord({
           exercise_id: 0,
           date_of_exercise: '',
@@ -219,6 +220,10 @@ export default function Exercises() {
               </li>
             ))}
           </ul>
+          <RecordChart
+            exerciseId={selectedExerciseId}
+            fetchRecords={() => fetchRecords(selectedExerciseId)}
+          />
         </div>
       )}
     </div>
