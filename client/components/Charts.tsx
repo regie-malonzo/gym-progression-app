@@ -53,7 +53,7 @@ export default function RecordChart({
     labels: records.map((record) => record.date_of_exercise),
     datasets: [
       {
-        label: 'New Records',
+        label: 'Personal Best',
         data: records.map((record) => record.new_record),
         fill: false,
         borderColor: 'rgba(75,192,192,1)',
@@ -87,9 +87,23 @@ export default function RecordChart({
   }
 
   return (
-    <div>
-      <h2>Exercise Record Chart</h2>
-      <Line data={data} options={options} />
+    <div className="record-chart-container">
+      <div className="records-container">
+        <h2>Exercise Records</h2>
+        <ul>
+          {records.map((record) => (
+            <li key={record.id}>
+              <span className="record-data">
+                {record.date_of_exercise} - New Record: {record.new_record}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="chart-container">
+        <h2>Exercise Record Chart</h2>
+        <Line data={data} options={options} />
+      </div>
     </div>
   )
 }

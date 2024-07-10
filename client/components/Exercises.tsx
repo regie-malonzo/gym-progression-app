@@ -29,6 +29,9 @@ export default function Exercises() {
     new_record: 0,
     note: '',
   })
+  const [exerciseGoals, setExerciseGoal] = useState<{
+    [exerciseId: number]: number
+  }>({})
 
   useEffect(() => {
     fetchExercises()
@@ -37,8 +40,12 @@ export default function Exercises() {
   useEffect(() => {
     if (selectedExerciseId !== null) {
       fetchRecords(selectedExerciseId)
+      setNewRecord((prevRecord) => ({
+        ...prevRecord,
+        goal: exerciseGoals[selectedExerciseId] || 0,
+      }))
     }
-  }, [selectedExerciseId])
+  }, [exerciseGoals, selectedExerciseId])
 
   const fetchExercises = async () => {
     try {
@@ -99,7 +106,7 @@ export default function Exercises() {
         setNewRecord({
           exercise_id: 0,
           date_of_exercise: '',
-          goal: 0,
+          goal: exerciseGoals[selectedExerciseId] || 0,
           new_record: 0,
           note: '',
         })
@@ -120,6 +127,7 @@ export default function Exercises() {
 
   const handleRecordDelete = async (id: number) => {
     try {
+      console.log(`Deleting record with ID: ${id}`)
       await deleteRecord(id)
       if (selectedExerciseId !== null) {
         fetchRecords(selectedExerciseId)
@@ -193,7 +201,6 @@ export default function Exercises() {
               placeholder="Notes"
               value={newRecord.note}
               onChange={handleRecordChange}
-              required
             />
             <button type="submit">Add Record</button>
           </form>
@@ -201,9 +208,7 @@ export default function Exercises() {
             {records.map((record) => (
               <li key={record.id}>
                 <div className="record-details">
-                  {' '}
                   <div className="record-info">
-                    {' '}
                     <span className="date">{record.date_of_exercise}</span> -
                     Goal: <span className="goal">{record.goal}</span>, New
                     Record:{' '}
@@ -211,7 +216,6 @@ export default function Exercises() {
                     Note: <span className="note">{record.note}</span>
                   </div>
                   <div className="record-actions">
-                    {' '}
                     <button onClick={() => handleRecordDelete(record.id)}>
                       Delete
                     </button>
