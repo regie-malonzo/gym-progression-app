@@ -1,9 +1,9 @@
 import { Router } from 'express'
-
 import * as db from '../db/dbFunctions.ts'
 
 const router = Router()
 
+// Get all records
 router.get('/', async (req, res) => {
   try {
     const result = await db.getAllRecords()
@@ -13,54 +13,47 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Something went wrong' })
   }
 })
+
+// Get records by exercise ID
 router.get('/:id', async (req, res) => {
   try {
     const id = Number(req.params.id)
-    const exerciseRecord = await db.getRecordsByExerciseId(id)
-    res.json(exerciseRecord)
+    const exerciseRecords = await db.getRecordsByExerciseId(id)
+    res.json(exerciseRecords)
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })
   }
 })
 
+// Add new record
 router.post('/', async (req, res) => {
   try {
-    const { goal, date_of_exercise, new_record, note, exercise_id } = req.body
-    const id = await db.addNewRecordsByExerciseId({
-      goal,
-      date_of_exercise,
-      note,
-      exercise_id,
-      new_record,
-    })
-
+    const newRecord = req.body
+    const id = await db.addNewRecordsByExerciseId(newRecord)
     res.status(201).json(id)
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })
   }
 })
+
+// Update record by ID
 router.patch('/:id', async (req, res) => {
   try {
     const id = Number(req.params.id)
-    const { goal, new_record, date_of_exercise, note } = req.body
-    const updateRecord = await db.updateRecordeByExerciseId(id, {
-      goal,
-      new_record,
-      date_of_exercise,
-      note,
-    })
-    if (updateRecord) {
-      console.log('updated content')
-      res.sendStatus(201)
+    const updatedRecord = req.body
+    const updateStatus = await db.updateRecordeByExerciseId(id, updatedRecord)
+    if (updateStatus) {
+      res.sendStatus(200)
     }
-    // console.log(updateRecord)
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })
   }
 })
+
+// Delete record by ID
 router.delete('/:id', async (req, res) => {
   try {
     const id = Number(req.params.id)

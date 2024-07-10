@@ -38,20 +38,21 @@ export async function getRecordsByExerciseId(
   exercise_id: number,
 ): Promise<Record[]> {
   return await connection('records')
-    .join('exercises', 'exercises.id', 'records.exercise_id')
     .where('exercise_id', exercise_id)
-    .select('exercise_name', 'goal', 'date_of_exercise', 'new_record', 'note')
-    .first()
+    .select(
+      'id',
+      'exercise_id',
+      'goal',
+      'date_of_exercise',
+      'new_record',
+      'note',
+    )
 }
 
 export async function addNewRecordsByExerciseId(
   newRecord: RecordData,
 ): Promise<number> {
   const { goal, new_record, date_of_exercise, note, exercise_id } = newRecord
-  const exerciseId = Number(exercise_id)
-  if (isNaN(exerciseId)) {
-    throw new Error('invaild exercise_id')
-  }
   const [newRecordId] = await connection('records')
     .insert({ goal, new_record, date_of_exercise, note, exercise_id })
     .returning('id')

@@ -1,7 +1,7 @@
 import request from 'superagent'
 import { Record, RecordData } from '../../models/exercises'
 
-const rootUrl = '/api/v1'
+const rootUrl = '/api/v1/'
 
 export async function getRecords(): Promise<Record[]> {
   const response = await request.get(rootUrl + 'records')
@@ -10,7 +10,7 @@ export async function getRecords(): Promise<Record[]> {
 
 export async function getRecordsByExerciseId(
   exercise_id: number,
-): Promise<RecordData[]> {
+): Promise<Record[]> {
   const response = await request.get(`${rootUrl}records/${exercise_id}`)
   return response.body
 }

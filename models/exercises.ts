@@ -1,7 +1,6 @@
 export interface Exercise {
   id: number
   exercise_name: string
-  records: Record[]
 }
 
 export interface Record {
