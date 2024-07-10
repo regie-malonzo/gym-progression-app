@@ -13,7 +13,7 @@ It a web app that tracks your personal best from your workout.
 
 
 
-## Boilerplate: Fullstack with Sass
+## Fullstack with Sass
 
 
 ## Setup
