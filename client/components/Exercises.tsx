@@ -129,7 +129,7 @@ export default function Exercises() {
   }
 
   return (
-    <div>
+    <div className="exercises-container">
       <h1>Exercises</h1>
       <form onSubmit={handleExerciseSubmit}>
         <input
@@ -156,7 +156,7 @@ export default function Exercises() {
         ))}
       </ul>
       {selectedExerciseId !== null && (
-        <div>
+        <div className="records-container">
           <h2>
             Records for{' '}
             {exercises.find((e) => e.id === selectedExerciseId)?.exercise_name}
@@ -199,11 +199,23 @@ export default function Exercises() {
           <ul>
             {records.map((record) => (
               <li key={record.id}>
-                {record.date_of_exercise} - Goal: {record.goal}, New Record:{' '}
-                {record.new_record}, Note: {record.note}
-                <button onClick={() => handleRecordDelete(record.id)}>
-                  Delete
-                </button>
+                <div className="record-details">
+                  {' '}
+                  <div className="record-info">
+                    {' '}
+                    <span className="date">{record.date_of_exercise}</span> -
+                    Goal: <span className="goal">{record.goal}</span>, New
+                    Record:{' '}
+                    <span className="new-record">{record.new_record}</span>,
+                    Note: <span className="note">{record.note}</span>
+                  </div>
+                  <div className="record-actions">
+                    {' '}
+                    <button onClick={() => handleRecordDelete(record.id)}>
+                      Delete
+                    </button>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
