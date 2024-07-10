@@ -26,6 +26,6 @@ export async function updateRecord(
   await request.patch(`${rootUrl}records/${id}`).send(record)
 }
 
-export async function deleteRecord(id: number): Promise<void> {
+export async function deleteRecord(id: number) {
   await request.delete(`${rootUrl}records/${id}`)
 }

@@ -60,8 +60,8 @@ router.delete('/:id', async (req, res) => {
     await db.deleteRecordById(id)
     res.sendStatus(200)
   } catch (error) {
-    console.error(`database error: ${error}`)
-    res.sendStatus(500)
+    console.error(`Error deleting record: ${error}`)
+    res.status(500).json({ message: 'Something went wrong' })
   }
 })
 
