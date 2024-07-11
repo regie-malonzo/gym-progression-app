@@ -13,7 +13,7 @@ It a web app that tracks your personal best from your workout.
 
 
 
-## Boilerplate: Fullstack with Sass
+## Fullstack with Sass
 
 
 ## Setup
@@ -35,8 +35,6 @@ See the instructions [here](https://docs.github.com/en/free-pro-team@latest/gith
 #### **From the command line**
 
 ```
-git clone https://github.com/dev-academy-challenges/boilerplate-fullstack [your-project-name]
-cd [your-project-name]
 npm install # to install dependencies
 npm run dev # to start the dev server
 npm run dbconfig # to migrate latest table and run seed
