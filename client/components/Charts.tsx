@@ -41,7 +41,13 @@ export default function RecordChart({
     const fetchAndSetRecords = async () => {
       try {
         const recordList = await getRecordsByExerciseId(exerciseId)
-        setRecords(recordList)
+        const sortedRecordList = recordList.sort((a, b) => {
+          return (
+            new Date(a.date_of_exercise).getTime() -
+            new Date(b.date_of_exercise).getTime()
+          )
+        })
+        setRecords(sortedRecordList)
       } catch (error) {
         console.error('Error fetching records:', error)
       }
