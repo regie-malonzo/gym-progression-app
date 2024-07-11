@@ -6,12 +6,12 @@ import {
   RecordData,
 } from '../../models/exercises'
 import { getExercises, addExercise, deleteExercise } from '../apis/Exercises'
-import RecordChart from './Charts'
 import {
   getRecordsByExerciseId,
   addRecord,
   deleteRecord,
 } from '../apis/Records'
+import RecordChart from './Charts'
 
 export default function Exercises() {
   const [exercises, setExercises] = useState<Exercise[]>([])
@@ -28,6 +28,8 @@ export default function Exercises() {
     goal: 0,
     new_record: 0,
     note: '',
+    goal_unit: 'kg', // Default unit
+    record_unit: 'kg',
   })
   const [exerciseGoals, setExerciseGoal] = useState<{
     [exerciseId: number]: number
@@ -58,7 +60,6 @@ export default function Exercises() {
 
   const fetchRecords = async (exerciseId: number) => {
     try {
-      console.log(`Fetching records for exercise ID: ${exerciseId}`)
       const recordsList = await getRecordsByExerciseId(exerciseId)
       setRecords(recordsList)
     } catch (error) {
@@ -79,20 +80,19 @@ export default function Exercises() {
     try {
       await addExercise(newExercise)
       fetchExercises()
-      setNewExercise({
-        exercise_name: '',
-      })
+      setNewExercise({ exercise_name: '' })
     } catch (error) {
       console.error('Error adding exercise:', error)
     }
   }
 
-  const handleRecordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRecordChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target
-    const newValue = Math.max(Number(value), 0)
     setNewRecord((prevRecord) => ({
       ...prevRecord,
-      [name]: newValue,
+      [name]: value,
     }))
   }
 
@@ -101,15 +101,16 @@ export default function Exercises() {
     try {
       if (selectedExerciseId) {
         const recordToAdd = { ...newRecord, exercise_id: selectedExerciseId }
-        console.log(`Adding record:`, recordToAdd)
         await addRecord(recordToAdd)
-        fetchRecords(selectedExerciseId) // Refetch records after adding a new record
+        fetchRecords(selectedExerciseId)
         setNewRecord({
           exercise_id: 0,
           date_of_exercise: '',
           goal: exerciseGoals[selectedExerciseId] || 0,
           new_record: 0,
           note: '',
+          goal_unit: 'kg', // Reset to default unit
+          record_unit: 'kg',
         })
       }
     } catch (error) {
@@ -128,13 +129,21 @@ export default function Exercises() {
 
   const handleRecordDelete = async (id: number) => {
     try {
-      console.log(`Deleting record with ID: ${id}`)
       await deleteRecord(id)
       if (selectedExerciseId !== null) {
         fetchRecords(selectedExerciseId)
       }
     } catch (error) {
       console.error('Error deleting record:', error)
+    }
+  }
+
+  const handleGoalSet = () => {
+    if (selectedExerciseId !== null) {
+      setExerciseGoal((prevGoals) => ({
+        ...prevGoals,
+        [selectedExerciseId]: newRecord.goal,
+      }))
     }
   }
 
@@ -188,6 +197,17 @@ export default function Exercises() {
               onChange={handleRecordChange}
               required
             />
+            <select
+              name="goal_unit"
+              value={newRecord.goal_unit}
+              onChange={handleRecordChange}
+              required
+            >
+              <option value="kg">kg</option>
+              <option value="lbs">lbs</option>
+              <option value="km">km</option>
+              <option value="miles">miles</option>
+            </select>
             <input
               type="number"
               name="new_record"
@@ -196,6 +216,17 @@ export default function Exercises() {
               onChange={handleRecordChange}
               required
             />
+            <select
+              name="record_unit"
+              value={newRecord.record_unit}
+              onChange={handleRecordChange}
+              required
+            >
+              <option value="kg">kg</option>
+              <option value="lbs">lbs</option>
+              <option value="km">km</option>
+              <option value="miles">miles</option>
+            </select>
             <input
               type="text"
               name="note"
@@ -205,16 +236,22 @@ export default function Exercises() {
             />
             <button type="submit">Add Record</button>
           </form>
+          <button onClick={handleGoalSet}>Set Goal</button>
           <ul>
             {records.map((record) => (
               <li key={record.id}>
                 <div className="record-details">
                   <div className="record-info">
                     <span className="date">{record.date_of_exercise}</span> -
-                    Goal: <span className="goal">{record.goal}</span>, New
-                    Record:{' '}
-                    <span className="new-record">{record.new_record}</span>,
-                    Note: <span className="note">{record.note}</span>
+                    Goal:{' '}
+                    <span className="goal">
+                      {record.goal} {record.goal_unit}
+                    </span>
+                    , New Record:{' '}
+                    <span className="new-record">
+                      {record.new_record} {record.record_unit}
+                    </span>{' '}
+                    , Note: <span className="note">{record.note}</span>
                   </div>
                   <div className="record-actions">
                     <button onClick={() => handleRecordDelete(record.id)}>

@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import * as db from '../db/dbFunctions.ts'
+import { RecordData } from '../../models/exercises.ts'
 
 const router = Router()
 
@@ -29,7 +30,7 @@ router.get('/:id', async (req, res) => {
 // Add new record
 router.post('/', async (req, res) => {
   try {
-    const newRecord = req.body
+    const newRecord: RecordData = req.body
     const id = await db.addNewRecordsByExerciseId(newRecord)
     res.status(201).json(id)
   } catch (error) {
@@ -42,11 +43,9 @@ router.post('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   try {
     const id = Number(req.params.id)
-    const updatedRecord = req.body
-    const updateStatus = await db.updateRecordeByExerciseId(id, updatedRecord)
-    if (updateStatus) {
-      res.sendStatus(200)
-    }
+    const updatedRecord: RecordData = req.body
+    await db.updateRecordById(id, updatedRecord)
+    res.sendStatus(200)
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })

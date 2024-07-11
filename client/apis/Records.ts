@@ -14,7 +14,6 @@ export async function getRecordsByExerciseId(
   const response = await request.get(`${rootUrl}records/${exercise_id}`)
   return response.body
 }
-
 export async function addRecord(record: RecordData): Promise<void> {
   await request.post(rootUrl + 'records').send(record)
 }

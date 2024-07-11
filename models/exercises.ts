@@ -10,6 +10,8 @@ export interface Record {
   goal: number
   new_record: number
   note: string
+  goal_unit: string
+  record_unit: string
 }
 
 export type RecordData = Omit<Record, 'id'>

@@ -100,7 +100,9 @@ export default function RecordChart({
           {records.map((record) => (
             <li key={record.id}>
               <span className="record-data">
-                {record.date_of_exercise} - New Record: {record.new_record}
+                {record.date_of_exercise} - Goal: {record.goal}{' '}
+                {record.goal_unit}, New Record: {record.new_record}{' '}
+                {record.record_unit}, Note: {record.note}
               </span>
             </li>
           ))}
