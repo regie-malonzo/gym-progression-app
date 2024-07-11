@@ -89,9 +89,10 @@ export default function Exercises() {
 
   const handleRecordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
+    const newValue = Math.max(Number(value), 0)
     setNewRecord((prevRecord) => ({
       ...prevRecord,
-      [name]: value,
+      [name]: newValue,
     }))
   }
 
