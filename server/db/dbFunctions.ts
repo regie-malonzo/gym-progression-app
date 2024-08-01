@@ -82,3 +82,56 @@ export async function updateRecordById(
 export async function deleteRecordById(id: number): Promise<void> {
   await connection('records').where({ id }).del()
 }
+
+//workout functions
+export async function getAllWorkouts() {
+  return await connection('workouts').select('*')
+}
+
+export async function getWorkoutById(id: number) {
+  return await connection('workouts').where({ id }).first()
+}
+
+export async function addNewWorkout(newWorkout: {
+  user_id: number
+  lifted_weight: number
+  reps: number
+}) {
+  await connection('workouts').insert(newWorkout)
+}
+
+export async function updateWorkoutById(
+  id: number,
+  updatedWorkout: { user_id: number; lifted_weight: number; reps: number },
+) {
+  await connection('workouts').where({ id }).update(updatedWorkout)
+}
+
+export async function deleteWorkoutById(id: number) {
+  await connection('workouts').where({ id }).del()
+}
+
+//users function
+
+export async function getAllUsers() {
+  return await connection('users').select('*')
+}
+
+export async function getUserById(id: number) {
+  return await connection('users').where({ id }).first()
+}
+
+export async function addNewUser(newUser: { name: string; weight: number }) {
+  await connection('users').insert(newUser)
+}
+
+export async function updateUserById(
+  id: number,
+  updatedUser: { name: string; weight: number },
+) {
+  await connection('users').where({ id }).update(updatedUser)
+}
+
+export async function deleteUserById(id: number) {
+  await connection('users').where({ id }).del()
+}
